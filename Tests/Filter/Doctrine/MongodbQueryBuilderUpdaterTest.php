@@ -241,12 +241,12 @@ class MongodbQueryBuilderUpdaterTest extends TestCase
 
         $this->initQueryBuilderUpdater()->addFilterConditions($form, $mongoQB);
 
-        fwrite(STDERR, print_r($mongoQB->getQueryArray(), TRUE));
+        fwrite(STDERR, print_r(json_encode($mongoQB->getQueryArray()), TRUE));
         fwrite(STDERR, print_r([
             '{"$and":[{"name":{"pattern":".*hey dude.*","flags":"i"}},{"position":99}]}',
             '{"$and":[{"name":"\/.*hey dude.*\/i"},{"position":99}]}'
         ], TRUE));
-        
+
         $this->assertContains(
             $this->toBson($mongoQB->getQueryArray()),
             [
