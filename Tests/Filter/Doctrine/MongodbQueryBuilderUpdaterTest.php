@@ -46,10 +46,10 @@ class MongodbQueryBuilderUpdaterTest extends TestCase
         $year = '2019';
 
         $bson = ['{}', '{"$and":[{"name":"blabla"}]}', '{"$and":[{"name":"blabla"},{"position":{"$gt":2}}]}', '{"$and":[{"name":"blabla"},{"position":{"$gt":2}},{"enabled":true}]}', '{"$and":[{"name":"blabla"},{"position":{"$gt":2}},{"enabled":true}]}', [
-            '{"$and":[{"name":{"regex":".*blabla$","flags":"i"}},{"position":{"$lte":2}},{"createdAt":{"$date":{"$numberLong":"1569535200000"}}}]}',
+            '{"$and":[{"name":{"pattern":".*blabla$","flags":"i"}},{"position":{"$lte":2}},{"createdAt":{"$date":{"$numberLong":"1569535200000"}}}]}',
             '{"$and":[{"name":"\/.*blabla$\/i"},{"position":{"$lte":2}},{"createdAt":{"$date":{"$numberLong":"1569535200000"}}}]}'
         ], [
-            '{"$and":[{"name":{"regex":".*blabla$","flags":"i"}},{"position":{"$lte":2}},{"createdAt":{"$date":{"$numberLong":"1569583260000"}}}]}',
+            '{"$and":[{"name":{"pattern":".*blabla$","flags":"i"}},{"position":{"$lte":2}},{"createdAt":{"$date":{"$numberLong":"1569583260000"}}}]}',
             '{"$and":[{"name":"\/.*blabla$\/i"},{"position":{"$lte":2}},{"createdAt":{"$date":{"$numberLong":"1569583260000"}}}]}'
         ]];
 
@@ -243,14 +243,14 @@ class MongodbQueryBuilderUpdaterTest extends TestCase
 
         fwrite(STDERR, print_r($mongoQB->getQueryArray(), TRUE));
         fwrite(STDERR, print_r([
-            '{"$and":[{"name":{"regex":".*hey dude.*","flags":"i"}},{"position":99}]}',
+            '{"$and":[{"name":{"pattern":".*hey dude.*","flags":"i"}},{"position":99}]}',
             '{"$and":[{"name":"\/.*hey dude.*\/i"},{"position":99}]}'
         ], TRUE));
         
         $this->assertContains(
             $this->toBson($mongoQB->getQueryArray()),
             [
-                '{"$and":[{"name":{"regex":".*hey dude.*","flags":"i"}},{"position":99}]}',
+                '{"$and":[{"name":{"pattern":".*hey dude.*","flags":"i"}},{"position":99}]}',
                 '{"$and":[{"name":"\/.*hey dude.*\/i"},{"position":99}]}'
             ]
         );
